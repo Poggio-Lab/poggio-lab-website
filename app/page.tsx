@@ -6,6 +6,7 @@ import { TeamSection } from "@/components/team-section"
 import { BlogSection } from "@/components/blog-section"
 import { Footer } from "@/components/footer"
 import { ArrowRight, ArrowUpRight, Brain, Network, Sparkles, Eye, ExternalLink } from "lucide-react"
+import { getBasePath } from "@/lib/utils"
 
 const researchAreas = [
   {
@@ -194,7 +195,7 @@ export default function Home() {
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
                 <a
-                  href="/assets/HistoryNeuroscienceAutobioTomasoPoggio%20(1).pdf"
+                  href={`${getBasePath()}/assets/HistoryNeuroscienceAutobioTomasoPoggio%20(1).pdf`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
@@ -203,7 +204,7 @@ export default function Home() {
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
                 <a
-                  href="/assets/PoggioCV-2020Draft.pdf"
+                  href={`${getBasePath()}/assets/PoggioCV-2020Draft.pdf`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"

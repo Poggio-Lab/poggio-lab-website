@@ -2,6 +2,8 @@ import Link from "next/link"
 import { ArrowRight, User, Users } from "lucide-react"
 import { peopleData } from "../app/data/people"
 
+import { getBasePath } from "@/lib/utils"
+
 const excludedSections = [
   "Former Postdoctoral Associates & PhD Students",
   "Former Masters Students & Visitors"
@@ -38,7 +40,7 @@ export function TeamSection() {
               <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full mb-4 overflow-hidden ring-4 ring-background group-hover:ring-primary/20 transition-all duration-300 shadow-md group-hover:shadow-lg">
                 {member.image ? (
                   <img
-                    src={member.image}
+                    src={`${getBasePath()}${member.image}`}
                     alt={member.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />

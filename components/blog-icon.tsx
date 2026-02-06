@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
-import { cn } from "@/lib/utils"
+import { useRef, useState, useEffect } from "react"
+import { cn, getBasePath } from "@/lib/utils"
 
 interface BlogIconProps {
     slug: string
@@ -17,7 +17,7 @@ export function BlogIcon({ slug, className }: BlogIconProps) {
 
     useEffect(() => {
         // Add cache buster to force reload
-        fetch(`/blog/${slug}/icon?v=${Date.now()}`)
+        fetch(`${getBasePath()}/blog/${slug}/icon?v=${Date.now()}`)
             .then((res) => {
                 if (!res.ok) throw new Error("Failed to fetch")
                 return res.text()
