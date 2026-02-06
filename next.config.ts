@@ -1,7 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig = {
+  output: 'export',
+  images: { unoptimized: true },
+  basePath: process.env.NODE_ENV === 'production' ? '/poggio-lab-website' : undefined,
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/poggio-lab-website/' : undefined,
 };
 
-export default nextConfig;
+module.exports = nextConfig;

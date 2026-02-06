@@ -1,6 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import { NextResponse } from 'next/server';
+import { getAllPostSlugs } from '@/lib/blogs';
+
+export async function generateStaticParams() {
+    const slugs = getAllPostSlugs();
+    return slugs.map((slug) => ({
+        slug,
+    }));
+}
 
 export async function GET(
     request: Request,

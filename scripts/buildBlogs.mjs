@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 
 const BLOG_DIR = path.join(process.cwd(), "content/blogs");
 const OUT_DIR = path.join(process.cwd(), "generated/blogs");
+const PUBLIC_ASSETS_DIR = path.join(process.cwd(), "public/blog-assets");
 
 console.log("Building blogs...");
 console.log(`Source: ${BLOG_DIR}`);
@@ -96,6 +97,18 @@ ${tikzCode}
 for (const slug of blogs) {
     const blogPath = path.join(BLOG_DIR, slug);
     if (!fs.statSync(blogPath).isDirectory()) continue;
+
+    // Copy assets to public directory
+    const assetsDir = path.join(blogPath, "assets");
+    if (fs.existsSync(assetsDir)) {
+        const destDir = path.join(PUBLIC_ASSETS_DIR, slug, "assets");
+        fs.mkdirSync(destDir, { recursive: true });
+
+        // Recursive copy
+        // fs.cpSync requires Node.js 16.7.0+
+        fs.cpSync(assetsDir, destDir, { recursive: true });
+        console.log(`    ✓ Copied assets for ${slug}`);
+    }
 
     const texFile = path.join(blogPath, "main.tex");
     if (!fs.existsSync(texFile)) {

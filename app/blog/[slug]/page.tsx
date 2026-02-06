@@ -83,10 +83,10 @@ export default async function BlogPost(context: { params: Promise<{ slug: string
                                     // Rewrite image src to point to our route handler if it's a local asset
                                     let src = props.src;
                                     if (typeof src === 'string' && src && !src.startsWith('http')) {
-                                        // If it's a relative path like "assets/image_0.png", map it to /blog/[slug]/assets/image_0.png
-                                        // Note: we are using /blog/ (singular) now
+                                        // If it's a relative path like "assets/image_0.png", map it to /blog-assets/[slug]/assets/image_0.png
                                         const cleanSrc = src.replace(/^\.\//, ''); // remove leading ./
-                                        src = `/blog/${slug}/${cleanSrc}`;
+                                        const basePath = process.env.NODE_ENV === 'production' ? '/poggio-lab-website' : '';
+                                        src = `${basePath}/blog-assets/${slug}/${cleanSrc}`;
                                     }
                                     return (
                                         <div className="my-8">
