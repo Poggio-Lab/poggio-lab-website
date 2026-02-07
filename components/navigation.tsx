@@ -5,11 +5,11 @@ import Link from "next/link"
 import { Menu, X } from "lucide-react"
 
 const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Research", href: "#research" },
+  { label: "About", href: "/#about" },
+  { label: "Research", href: "/#research" },
   { label: "People", href: "/people" },
-  { label: "Publications", href: "#publications" },
-  { label: "Blog", href: "/blog" },
+  { label: "Publications", href: "/publications" },
+  { label: "Blog & Updates", href: "/blog" },
 ]
 
 export function Navigation() {

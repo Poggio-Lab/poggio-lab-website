@@ -1,36 +1,8 @@
 import { ArrowUpRight } from "lucide-react"
 import Link from "next/link"
+import publicationsData from "@/app/data/publications.json"
 
-const publications = [
-  {
-    title: "Hierarchical representations in the visual cortex emerge from predictive coding",
-    authors: "Chen, S., Torres, M., Zhang, E.",
-    venue: "Nature Neuroscience",
-    year: "2025",
-    link: "#",
-  },
-  {
-    title: "A unified model of working memory and attention in transformer architectures",
-    authors: "Park, J., Chen, S.",
-    venue: "NeurIPS",
-    year: "2025",
-    link: "#",
-  },
-  {
-    title: "Biologically plausible backpropagation through sparse neural circuits",
-    authors: "Zhang, E., Kim, A., Torres, M.",
-    venue: "ICML",
-    year: "2024",
-    link: "#",
-  },
-  {
-    title: "The role of recurrence in visual object recognition: A computational study",
-    authors: "Sharma, P., Chen, S.",
-    venue: "Journal of Neuroscience",
-    year: "2024",
-    link: "#",
-  },
-]
+const publications = publicationsData.slice(0, 5)
 
 export function PublicationsSection() {
   return (
@@ -46,7 +18,7 @@ export function PublicationsSection() {
             </h2>
           </div>
           <Link
-            href="#"
+            href="/publications"
             className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors inline-flex items-center gap-1"
           >
             View all publications
@@ -59,6 +31,8 @@ export function PublicationsSection() {
             <Link
               key={index}
               href={pub.link}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group py-8 flex flex-col md:flex-row md:items-start gap-4 md:gap-8"
             >
               <div className="md:w-20 shrink-0">

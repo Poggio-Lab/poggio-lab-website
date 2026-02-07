@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/navigation"
+import { getBasePath } from "@/lib/utils"
 import { Footer } from "@/components/footer"
 import { peopleData } from "../data/people"
 
@@ -35,7 +36,7 @@ export default function PeoplePage() {
                     <div className="aspect-square rounded-2xl bg-muted mb-5 overflow-hidden">
                       {member.image ? (
                         <img
-                          src={member.image}
+                          src={`${getBasePath()}${member.image}`}
                           alt={member.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />

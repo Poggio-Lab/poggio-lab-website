@@ -14,9 +14,10 @@
 </clipPath>
 <mask id="mask_circles_c746ee33">
 <rect width="100%" height="100%" fill="black" />
-<circle cx="595.0" cy="327.0" r="229" fill="white" />
-<g class="orbit-group-c746ee33 js-orbit-group">
-<circle cx="249" cy="248" r="87" fill="white" />
+<circle cx="595.0" cy="327.0" r="153" fill="white" />
+
+<g class="orbit-group-c746ee33 js-orbit-group-1">
+<circle cx="342" cy="266" r="87" fill="white" />
 </g>
 </mask>
 </defs>

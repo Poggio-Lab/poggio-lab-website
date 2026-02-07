@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
-import { blogs } from "@/app/data/blogs"
 import { BlogIcon } from "./blog-icon"
 import { PdfIcon } from "./pdf-icon"
+import { BlogPost } from "@/app/data/blogs"
 
 // Helper function to extract YouTube video ID from URL
 function getYouTubeVideoId(url: string): string | null {
@@ -37,32 +37,47 @@ function isPdfLink(url: string): boolean {
   return url.toLowerCase().endsWith('.pdf');
 }
 
-export function BlogSection() {
-  const recentPosts = blogs.slice(0, 6)
+interface BlogSectionProps {
+  posts: BlogPost[];
+  title?: string;
+  subtitle?: string;
+  id?: string;
+  viewAllLink?: string;
+  viewAllText?: string;
+}
+
+export function BlogSection({
+  posts,
+  title = "Blogposts and Updates",
+  subtitle = "Latest Updates",
+  id = "blog",
+  viewAllLink = "/blog",
+  viewAllText = "View all posts"
+}: BlogSectionProps) {
 
   return (
-    <section id="blog" className="py-32 px-6 bg-background">
+    <section id={id} className="py-32 px-6 bg-background">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
           <div className="max-w-2xl">
             <p className="text-sm font-medium tracking-widest uppercase text-muted-foreground mb-4">
-              Latest Updates
+              {subtitle}
             </p>
             <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground text-balance">
-              Blogposts and Updates
+              {title}
             </h2>
           </div>
           <Link
-            href="/blog"
+            href={viewAllLink}
             className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors group"
           >
-            View all posts
+            {viewAllText}
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {recentPosts.map((post) => {
+          {posts.map((post, index) => {
             let thumbnailUrl: string | null = null;
             let isExternal = false;
 
@@ -82,7 +97,7 @@ export function BlogSection() {
                 href={post.link ? post.link : `/blog/${post.slug}`}
                 target={post.link ? "_blank" : undefined}
                 rel={post.link ? "noopener noreferrer" : undefined}
-                className="group"
+                className={`group ${index === 2 ? 'hidden lg:block' : ''}`}
               >
                 <article>
                   <div className="aspect-[16/10] rounded-xl bg-muted mb-5 overflow-hidden">

@@ -12,11 +12,16 @@
 </clipPath>
 <mask id="mask_circles_8c38e792">
 <rect width="100%" height="100%" fill="black" />
-<circle cx="601.0" cy="306.0" r="225" fill="white" />
-<g class="orbit-group-8c38e792 js-orbit-group">
-<circle cx="274" cy="228" r="79" fill="white" />
-<circle cx="80" cy="337" r="56" fill="white" />
-<circle cx="906" cy="378" r="50" fill="white" />
+<circle cx="601.0" cy="306.0" r="150" fill="white" />
+
+<g class="orbit-group-8c38e792 js-orbit-group-1">
+<circle cx="360" cy="251" r="79" fill="white" />
+</g>
+<g class="orbit-group-8c38e792 js-orbit-group-2">
+<circle cx="288" cy="328" r="56" fill="white" />
+</g>
+<g class="orbit-group-8c38e792 js-orbit-group-3">
+<circle cx="815" cy="359" r="50" fill="white" />
 </g>
 </mask>
 </defs>

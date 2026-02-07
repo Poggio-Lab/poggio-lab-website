@@ -1,12 +1,13 @@
-"use client"
-
 import Link from "next/link"
 import { Navigation } from "@/components/navigation"
 import { TeamSection } from "@/components/team-section"
 import { BlogSection } from "@/components/blog-section"
+import { PublicationsSection } from "@/components/publications-section"
 import { Footer } from "@/components/footer"
 import { ArrowRight, ArrowUpRight, Brain, Network, Sparkles, Eye, ExternalLink } from "lucide-react"
 import { getBasePath } from "@/lib/utils"
+import { getAllPostSlugs, getPostData } from "@/lib/blogs"
+import { blogs as staticBlogs } from "@/app/data/blogs"
 
 const researchAreas = [
   {
@@ -35,96 +36,34 @@ const researchAreas = [
   },
 ]
 
-const publications = [
-  {
-    year: "2026",
-    papers: [
-      {
-        title: "Attention Mechanisms in Biological and Artificial Neural Networks: A Comparative Analysis",
-        authors: "Chen, S., Torres, M., Zhang, E.",
-        venue: "Nature Neuroscience",
-        doi: "10.1038/nn.2026.001",
-      },
-      {
-        title: "Predictive Coding as a Unifying Principle for Understanding Intelligence",
-        authors: "Chen, S., Park, J.",
-        venue: "Annual Review of Neuroscience",
-        doi: "10.1146/annurev-neuro-2026",
-      },
-    ],
-  },
-  {
-    year: "2025",
-    papers: [
-      {
-        title: "Deep Network Models of the Visual Cortex: Successes and Limitations",
-        authors: "Sharma, P., Torres, M., Chen, S.",
-        venue: "Neuron",
-        doi: "10.1016/j.neuron.2025.08.012",
-      },
-      {
-        title: "Sleep-Dependent Memory Consolidation: A Computational Perspective",
-        authors: "Zhang, E., Kim, A., Chen, S.",
-        venue: "Cell Reports",
-        doi: "10.1016/j.celrep.2025.09.043",
-      },
-      {
-        title: "Sparse Distributed Representations in Hippocampal Memory Systems",
-        authors: "Park, J., Zhang, E., Torres, M.",
-        venue: "PNAS",
-        doi: "10.1073/pnas.2025.115",
-      },
-      {
-        title: "Interpretable AI Through the Lens of Neuroscience",
-        authors: "Torres, M., Sharma, P., Chen, S.",
-        venue: "NeurIPS 2025",
-        doi: "10.arxiv.2025.12345",
-      },
-    ],
-  },
-  {
-    year: "2024",
-    papers: [
-      {
-        title: "Neural Mechanisms of Context-Dependent Decision Making",
-        authors: "Chen, S., Zhang, E., Park, J.",
-        venue: "Science",
-        doi: "10.1126/science.2024.abc",
-      },
-      {
-        title: "Transformer Architectures as Models of Prefrontal Cortex Function",
-        authors: "Kim, A., Torres, M., Chen, S.",
-        venue: "ICLR 2024",
-        doi: "10.arxiv.2024.67890",
-      },
-      {
-        title: "The Role of Temporal Structure in Neural Computation",
-        authors: "Zhang, E., Sharma, P., Park, J.",
-        venue: "Current Biology",
-        doi: "10.1016/j.cub.2024.05.021",
-      },
-    ],
-  },
-  {
-    year: "2023",
-    papers: [
-      {
-        title: "Biologically Plausible Learning Rules for Deep Neural Networks",
-        authors: "Torres, M., Chen, S.",
-        venue: "Nature Machine Intelligence",
-        doi: "10.1038/s42256-023-001",
-      },
-      {
-        title: "Neural Correlates of Abstract Reasoning in Humans and Machines",
-        authors: "Park, J., Kim, A., Zhang, E., Chen, S.",
-        venue: "eLife",
-        doi: "10.7554/eLife.2023.78901",
-      },
-    ],
-  },
-]
 
-export default function Home() {
+
+export default async function Home() {
+  // Fetch dynamic blogs from markdown files
+  const slugs = getAllPostSlugs();
+  const dynamicPosts = await Promise.all(
+    slugs.map(slug => getPostData(slug))
+  );
+
+  const blogPosts = dynamicPosts
+    .filter((p): p is NonNullable<typeof p> => p !== null)
+    .map(p => ({
+      ...p,
+      link: undefined,
+      isExternal: false
+    }))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+
+  const updatePosts = staticBlogs
+    .filter(b => b.category === 'Interesting Bit')
+    .map(b => ({
+      ...b,
+      isExternal: true
+    }))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+
   return (
     <main className="min-h-screen">
       <Navigation />
@@ -159,7 +98,13 @@ export default function Home() {
         </div>
       </section>
 
-      <BlogSection />
+      <BlogSection
+        posts={blogPosts}
+        title="Latest Blog Posts"
+        subtitle="From the Lab"
+        id="blog"
+        viewAllLink="/blog?filter=Blog"
+      />
 
       {/* About Section */}
       <section id="about" className="py-32 px-6 bg-card">
@@ -228,6 +173,15 @@ export default function Home() {
         </div>
       </section>
 
+      <BlogSection
+        posts={updatePosts}
+        title="News & Updates"
+        subtitle="Latest Updates"
+        id="updates"
+        viewAllLink="/blog?filter=Updates"
+        viewAllText="View all updates"
+      />
+
       {/* Research Section */}
       <section id="research" className="py-32 px-6">
         <div className="max-w-6xl mx-auto">
@@ -265,59 +219,7 @@ export default function Home() {
       <TeamSection />
 
       {/* Publications Section */}
-      <section id="publications" className="py-32 px-6 bg-card">
-        <div className="max-w-6xl mx-auto">
-          <div className="max-w-2xl mb-20">
-            <p className="text-sm font-medium tracking-widest uppercase text-muted-foreground mb-4">
-              Selected Works
-            </p>
-            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-6">
-              Publications
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Selected publications from the Poggio Lab. For a complete list,
-              see our <a href="https://scholar.google.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Google Scholar</a> page.
-            </p>
-          </div>
-
-          <div className="max-w-4xl">
-            {publications.map((yearGroup) => (
-              <div key={yearGroup.year} className="mb-16 last:mb-0">
-                <h2 className="text-2xl font-semibold text-foreground mb-8 pb-4 border-b border-border">
-                  {yearGroup.year}
-                </h2>
-                <div className="flex flex-col gap-8">
-                  {yearGroup.papers.map((paper) => (
-                    <article key={paper.doi} className="group">
-                      <h3 className="text-lg font-medium text-foreground mb-2 text-balance">
-                        {paper.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        {paper.authors}
-                      </p>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm font-medium text-foreground/80">
-                          {paper.venue}
-                        </span>
-                        <a
-                          href={`https://doi.org/${paper.doi}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
-                        >
-                          DOI
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      <PublicationsSection />
 
       <Footer />
     </main>

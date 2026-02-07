@@ -13,7 +13,7 @@ export function BlogIcon({ slug, className }: BlogIconProps) {
     const [error, setError] = useState(false)
 
     const containerRef = useRef<HTMLDivElement>(null)
-    const animationRef = useRef<Animation | null>(null)
+    const animationsRef = useRef<Map<string, Animation>>(new Map())
 
     useEffect(() => {
         // Add cache buster to force reload
@@ -31,121 +31,114 @@ export function BlogIcon({ slug, className }: BlogIconProps) {
 
     const handleMouseEnter = () => {
         if (!containerRef.current) return
-        const group = containerRef.current.querySelector('.js-orbit-group')
-        if (!group) return
 
-        // If there is an existing return animation, cancel it
-        if (animationRef.current) {
-            animationRef.current.cancel()
-        }
+        // Find all orbit groups
+        // Use querySelectorAll to find all groups matching the pattern
+        // The script generates classes like 'js-orbit-group-1', 'js-orbit-group-2'
+        const groups = containerRef.current.querySelectorAll<SVGGElement>('[class*="js-orbit-group"]')
 
-        // Create new infinite rotation from current state (which is 0 or whatever cancel left it at?)
-        // Actually, if we just cancel, it snaps back. We need to handle continuity if we re-enter quickly.
-        // For simplicity first:
-        // Set up keyframes 0->360.
-        // If we want smooth re-entry, we might need to read computed style?
-        // Let's rely on the fact that if we create a new animation,
-        // it starts from the underlying value.
-        // BUT, we want it to ROTATE.
-        // Let's just start a standard infinite rotation.
+        if (groups.length === 0) return
 
-        // Keyframes
-        const keyframes = [
-            { transform: 'rotate(0deg)' },
-            { transform: 'rotate(360deg)' }
-        ]
+        groups.forEach((group) => {
+            // Extract index from class name if possible to determine speed
+            // Pattern: js-orbit-group-N
+            // If the script generated 'js-orbit-group' (fallback for single), treat as 1
+            const match = group.getAttribute('class')?.match(/js-orbit-group-(\d+)/)
+            const index = match ? parseInt(match[1]) : 1
 
-        // However, if we simply start 0->360, it might jump if we were "in the middle" of a reverse.
-        // WAAPI is smart. If we don't specify the start, it uses current.
-        // But for rotation, "current" might be 0 if no animation is applying.
-        // Let's try specifying just the destination, but WAAPI needs 2 frames usually for rotation to know direction?
-        // Actually, 'rotate(360deg)' is ambiguous without a start.
+            handleSingleGroup(group, index)
+        })
+    }
 
-        // CORRECT APPROACH:
-        // 1. Get current computed rotation.
-        // 2. Animate from current to current + 360.
-        // This ensures smoothness.
+    const handleSingleGroup = (group: Element, index: number) => {
+        // Base period 20s. Others are faster multiples.
+        // T_slowest = 20s.
+        // T_other = 20s / index.
+        const BASE_DURATION = 20000
+        const duration = BASE_DURATION / index
 
-        const computedStyle = window.getComputedStyle(group)
-        // Transform is a matrix. Need to parse.
-        // Parsing matrix to degrees is annoying.
+        // Identifier for map. Use a unique class or index
+        // We can use the class name itself as key
+        const id = Array.from(group.classList).find(c => c.startsWith('js-orbit-group')) || 'default'
 
-        // SIMPLER APPROACH:
-        // Always start fresh?
-        // When we hover, we want it to spin.
-        // When we leave, we reverse.
+        // Check existing animation for THIS group
+        const existingAnim = animationsRef.current.get(id)
 
-        // Let's stick to the user request: "finish rotation or go back to original state by moving backwards".
-        // "Moving backwards" = Reverse.
-
-        // 1. Start or Resume infinite rotation.
-        // If we effectively use `playbackRate`, we can just reverse it!
-
-        if (!animationRef.current) {
+        if (!existingAnim) {
             const keyframes = [
                 { transform: 'rotate(0deg)' },
                 { transform: 'rotate(360deg)' }
             ]
 
             const anim = group.animate(keyframes, {
-                duration: 20000,
+                duration: duration,
                 iterations: Infinity
             })
-            animationRef.current = anim
+            animationsRef.current.set(id, anim)
         } else {
-            // If it exists, ensure it is playing forward
-            animationRef.current.playbackRate = 1
-            animationRef.current.play()
+            existingAnim.playbackRate = 1
+            existingAnim.play()
         }
     }
 
     const handleMouseLeave = () => {
-        if (!containerRef.current || !animationRef.current) return
+        if (!containerRef.current) return
 
-        const group = containerRef.current.querySelector('.js-orbit-group')
-        if (!group) return
+        // Iterate over all active animations
+        animationsRef.current.forEach((anim, id) => {
+            // Find the group element again (or we could store it in map too, but map key is class string)
+            // Or just assume anim.effect.target is the element
+            // WAAPI Animation has effect.target
+            const group = (anim.effect as KeyframeEffect)?.target as HTMLElement
+            if (!group) return
 
-        const anim = animationRef.current
-        anim.pause()
+            anim.pause()
 
-        const DURATION = 20000
-        const currentTime = (anim.currentTime as number) || 0
-        const progress = (currentTime % DURATION) / DURATION
-        const currentAngle = progress * 360
+            // Determine duration from animation effect timing
+            // We need to know original duration to calc progress correctly
+            const timing = anim.effect?.getTiming()
+            const originalDuration = Number(timing?.duration) || 20000
 
-        // Calculate target and duration based on progress
-        const isReversing = progress < 0.5
-        const targetAngle = isReversing ? 0 : 360
+            const currentTime = (anim.currentTime as number) || 0
+            const progress = (currentTime % originalDuration) / originalDuration
+            const currentAngle = progress * 360
 
-        // Distance to cover (in degrees)
-        const distance = Math.abs(targetAngle - currentAngle)
+            // Target based on shortest path to 0 or 360?
+            // User requested: "elastic when hoving stops"
+            // And implicitly "ends at init conditions". So target is 0 (or 360).
+            const targetAngle = progress > 0.5 ? 360 : 0
 
-        // Normal time to cover this distance
-        const normalTime = (distance / 360) * DURATION
+            // Calculate distance
+            const distance = Math.abs(targetAngle - currentAngle)
 
-        // 4x faster
-        const fastTime = normalTime / 4
+            // Speed up return
+            // base speed: 360 deg in originalDuration
+            // return speed: faster
+            const fastTime = (distance / 360) * originalDuration / 2 // 2x speed return?
 
-        // Create exit animation
-        const keyframes = [
-            { transform: `rotate(${currentAngle}deg)` },
-            { transform: `rotate(${targetAngle}deg)` }
-        ]
+            const keyframes = [
+                { transform: `rotate(${currentAngle}deg)` },
+                { transform: `rotate(${targetAngle}deg)` }
+            ]
 
-        // Cancel the infinite one
-        anim.cancel()
+            anim.cancel()
 
-        const exitAnim = group.animate(keyframes, {
-            duration: fastTime,
-            fill: 'forwards'
+            const exitAnim = group.animate(keyframes, {
+                duration: fastTime,
+                fill: 'forwards',
+                easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)' // Elastic overshoot
+            })
+
+            // Update map
+            animationsRef.current.set(id, exitAnim)
+
+            exitAnim.onfinish = () => {
+                exitAnim.cancel()
+                // set transform to 0 explicitly to avoid jump if css doesn't hold?
+                // actually cancel removes transform so it goes to 0 (default).
+                animationsRef.current.delete(id)
+            }
         })
-
-        animationRef.current = exitAnim
-
-        exitAnim.onfinish = () => {
-            exitAnim.cancel()
-            animationRef.current = null
-        }
     }
 
 
