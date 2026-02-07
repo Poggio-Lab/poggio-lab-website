@@ -51,7 +51,7 @@ export function BlogSection({
   title = "Blogposts and Updates",
   subtitle = "Latest Updates",
   id = "blog",
-  viewAllLink = "/blog",
+  viewAllLink = "/blogsupdates",
   viewAllText = "View all posts"
 }: BlogSectionProps) {
 
@@ -94,7 +94,7 @@ export function BlogSection({
             return (
               <Link
                 key={post.slug}
-                href={post.link ? post.link : `/blog/${post.slug}`}
+                href={post.link ? post.link : `/blogsupdates/${post.slug}`}
                 target={post.link ? "_blank" : undefined}
                 rel={post.link ? "noopener noreferrer" : undefined}
                 className={`group ${index === 2 ? 'hidden lg:block' : ''}`}

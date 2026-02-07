@@ -76,8 +76,8 @@ function BlogListContent({ posts }: BlogListProps) {
                         key={f}
                         onClick={() => setFilter(f)}
                         className={`pb-4 text-sm font-medium transition-colors relative ${filter === f
-                                ? "text-foreground"
-                                : "text-muted-foreground hover:text-foreground"
+                            ? "text-foreground"
+                            : "text-muted-foreground hover:text-foreground"
                             }`}
                     >
                         {f}
@@ -148,7 +148,7 @@ function BlogListContent({ posts }: BlogListProps) {
                                 </a>
                             ) : (
                                 // Internal Blog Post
-                                <Link href={`/blog/${post.slug}`} className="block">
+                                <Link href={`/blogsupdates/${post.slug}`} className="block">
                                     <div className="flex flex-col md:flex-row gap-6 items-start">
                                         {/* Blog Icon */}
                                         <div className="flex-shrink-0 w-full md:w-48 h-48 md:h-32 rounded-xl bg-muted overflow-hidden">

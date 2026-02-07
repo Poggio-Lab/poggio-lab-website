@@ -9,7 +9,7 @@ const navItems = [
   { label: "Research", href: "/#research" },
   { label: "People", href: "/people" },
   { label: "Publications", href: "/publications" },
-  { label: "Blog & Updates", href: "/blog" },
+  { label: "Blog & Updates", href: "/blogsupdates" },
 ]
 
 export function Navigation() {

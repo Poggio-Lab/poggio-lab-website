@@ -82,7 +82,7 @@ export default async function Home() {
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="#blog"
+              href="/blogsupdates"
               className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
             >
               Blogs and Updates
@@ -103,7 +103,7 @@ export default async function Home() {
         title="Latest Blog Posts"
         subtitle="From the Lab"
         id="blog"
-        viewAllLink="/blog?filter=Blog"
+        viewAllLink="/blogsupdates?filter=Blog"
       />
 
       {/* About Section */}
@@ -124,7 +124,7 @@ export default async function Home() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="https://scholar.google.com"
+                  href="https://scholar.google.com/citations?hl=en&user=WgAGy7wAAAAJ"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
@@ -173,15 +173,6 @@ export default async function Home() {
         </div>
       </section>
 
-      <BlogSection
-        posts={updatePosts}
-        title="News & Updates"
-        subtitle="Latest Updates"
-        id="updates"
-        viewAllLink="/blog?filter=Updates"
-        viewAllText="View all updates"
-      />
-
       {/* Research Section */}
       <section id="research" className="py-32 px-6">
         <div className="max-w-6xl mx-auto">
@@ -220,6 +211,15 @@ export default async function Home() {
 
       {/* Publications Section */}
       <PublicationsSection />
+      <BlogSection
+        posts={updatePosts}
+        title="News & Updates"
+        subtitle="Latest Updates"
+        id="updates"
+        viewAllLink="/blogsupdates?filter=Updates"
+        viewAllText="View all updates"
+      />
+
 
       <Footer />
     </main>
