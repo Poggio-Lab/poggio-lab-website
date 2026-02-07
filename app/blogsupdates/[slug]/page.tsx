@@ -85,7 +85,7 @@ export default async function BlogPost(context: { params: Promise<{ slug: string
                                     if (typeof src === 'string' && src && !src.startsWith('http')) {
                                         // If it's a relative path like "assets/image_0.png", map it to /blog-assets/[slug]/assets/image_0.png
                                         const cleanSrc = src.replace(/^\.\//, ''); // remove leading ./
-                                        const basePath = process.env.NODE_ENV === 'production' ? '/poggio-lab-website' : '';
+                                        const basePath = '';
                                         src = `${basePath}/blog-assets/${slug}/${cleanSrc}`;
                                     }
                                     return (

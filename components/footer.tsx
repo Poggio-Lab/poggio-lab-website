@@ -66,6 +66,14 @@ export function Footer() {
           <p className="text-xs text-muted-foreground">
             © 2026 Poggio Lab, MIT. All rights reserved.
           </p>
+          <a
+            href="https://accessibility.mit.edu"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Accessibility
+          </a>
         </div>
       </div>
     </footer>

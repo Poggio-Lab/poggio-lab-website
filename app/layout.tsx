@@ -9,8 +9,6 @@ const inter = Inter({
   variable: '--font-inter'
 });
 
-const basePath = process.env.NODE_ENV === 'production' ? '/poggio-lab-website' : '';
-
 export const metadata: Metadata = {
   title: 'Poggio Lab | MIT',
   description: 'Pioneering research at the intersection of artificial intelligence and neuroscience at MIT',
@@ -18,19 +16,19 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: `${basePath}/icon-light-32x32.png`,
+        url: '/icon-light-32x32.png',
         media: '(prefers-color-scheme: light)',
       },
       {
-        url: `${basePath}/icon-dark-32x32.png`,
+        url: '/icon-dark-32x32.png',
         media: '(prefers-color-scheme: dark)',
       },
       {
-        url: `${basePath}/icon.svg`,
+        url: '/icon.svg',
         type: 'image/svg+xml',
       },
     ],
-    apple: `${basePath}/apple-icon.png`,
+    apple: '/apple-icon.png',
   },
 }
 
