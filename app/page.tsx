@@ -4,6 +4,7 @@ import { TeamSection } from "@/components/team-section"
 import { BlogSection } from "@/components/blog-section"
 import { PublicationsSection } from "@/components/publications-section"
 import { Footer } from "@/components/footer"
+import { SeminarTimeline } from "@/components/seminar-timeline"
 import { ArrowRight, ArrowUpRight, Brain, Network, Sparkles, Eye, ExternalLink } from "lucide-react"
 import { getBasePath } from "@/lib/utils"
 import { getAllPostSlugs, getPostData } from "@/lib/blogs"
@@ -211,6 +212,45 @@ export default async function Home() {
 
       {/* Publications Section */}
       <PublicationsSection />
+      <section id="seminar" className="py-32 px-6 bg-card">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div>
+              <p className="text-sm font-medium tracking-widest uppercase text-muted-foreground mb-4">
+                New Seminar Series
+              </p>
+              <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-foreground mb-6 text-balance">
+                AI: Foundations for Academia (and Startups)
+              </h2>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                The landscape of AI research is shifting. Many problems that once defined academia are now dominated by scale, data, and incumbent advantage. Yet the most important questions remain open. What are the fundamental principles of intelligence, and how can they guide systems that learn efficiently, generalize robustly, and create real societal and economic value?
+                This seminar argues that academia remains the place to identify and test principles of intelligence. Startups remain the place to turn those principles into systems that matter.
+                We convene the MIT-area community to identify foundational principles that are shared by biological and artificial intelligence, and translate them into deployable, venture-scale technologies.
+                We will connect empirical evidence from cognitive development, systems neuroscience, and modern AI systems with formal structure in learning and reasoning, including sample efficiency, sparse compositionality, invariances, memory, optimization dynamics, and generalization.
+                By the end of the series, we will have identified and tested key conjectures about intelligence and built new collaborations between labs and startups.
+
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="https://scholar.google.com/citations?hl=en&user=WgAGy7wAAAAJ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
+                >
+                  Interest Form
+                  <ArrowUpRight className="w-4 h-4" />
+                </a>
+
+              </div>
+            </div>
+            <div>
+              <SeminarTimeline />
+            </div>
+          </div>
+        </div>
+      </section>
+
+
       <BlogSection
         posts={updatePosts}
         title="News & Updates"
