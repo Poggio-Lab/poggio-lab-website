@@ -120,7 +120,7 @@ export default async function Home() {
               <p className="text-lg text-muted-foreground leading-relaxed mb-6">
                 Tomaso A. Poggio is a founder of computational neuroscience. He pioneered models of visual perception, bridged neuroscience and machine learning, and helped establish regularization theory and learning theory in vision. His work now focuses on the mathematics of deep learning and visual recognition.
 
-                He has founded, advised, or invested in multiple technology companies, including DeepMind and Mobileye, and mentored leaders such as Christof Koch, Amnon Shashua, and Demis Hassabis. Poggio is the Eugene McDermott Professor at MIT and former co-director of the Center for Brains, Minds, and Machines.
+                He has founded, advised, or invested in multiple technology companies, including DeepMind and Mobileye, and mentored leaders such as Christof Koch, Amnon Shashua, and Demis Hassabis. Poggio is the Eugene McDermott Professor at MIT and former co-director of the Center for Brains, Minds, and Machines. As of 2024, he stands as the largest individual recipient of NSF AI funding over a 14-year period, responsible for over a quarter of all such funding awarded to MIT.
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
