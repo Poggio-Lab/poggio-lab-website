@@ -9,7 +9,6 @@ import { ArrowRight, ArrowUpRight, Brain, Network, Sparkles, Eye, ExternalLink }
 import { getBasePath } from "@/lib/utils"
 import { getAllPostSlugs, getPostData } from "@/lib/blogs"
 import { blogs as staticBlogs } from "@/app/data/blogs"
-import { Html, Head, Main, NextScript } from 'next/document';
 
 const researchAreas = [
   {
@@ -265,31 +264,4 @@ export default async function Home() {
       <Footer />
     </main>
   )
-}
-
-export default function Document() {
-  return (
-    <Html lang="en">
-      <Head>
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-1CFGQ7PN0Y"
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-1CFGQ7PN0Y');
-            `,
-          }}
-        ></script>
-      </Head>
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
 }
