@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { Html, Head, Main, NextScript } from 'next/document';
 import { Navigation } from "@/components/navigation"
 import { TeamSection } from "@/components/team-section"
 import { BlogSection } from "@/components/blog-section"
@@ -67,29 +66,6 @@ export default async function Home() {
     .slice(0, 3);
 
   return (
-        <Html lang="en">
-      <Head>
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-1CFGQ7PN0Y"
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-1CFGQ7PN0Y');
-            `,
-          }}
-        ></script>
-      </Head>
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-    
     <main className="min-h-screen">
       <Navigation />
 
