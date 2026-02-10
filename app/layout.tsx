@@ -40,17 +40,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans antialiased`}>
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  )
-}
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
       <head>
         <Script
           strategy="afterInteractive"
@@ -65,7 +54,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
       </head>
-      <body>{children}</body>
+      <body className={`${inter.variable} font-sans antialiased`}>
+        {children}
+        <Analytics />
+      </body>
     </html>
-  );
+  )
 }
