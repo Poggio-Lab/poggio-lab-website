@@ -51,6 +51,7 @@ export const peopleData: Section[] = [
         type: "grid",
         members: [
             { name: "Liu Ziyin", image: "/people/ziyinl_pic-300x300.png" },
+            { name: "John Gabrieli Buchet", affiliation: "Johns Hopkins University", image: "/people/John.jpg" },
         ]
     },
 
