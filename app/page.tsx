@@ -5,7 +5,7 @@ import { BlogSection } from "@/components/blog-section"
 import { PublicationsSection } from "@/components/publications-section"
 import { Footer } from "@/components/footer"
 import { SeminarTimeline } from "@/components/seminar-timeline"
-import { ArrowRight, ArrowUpRight, Brain, Network, Sparkles, Eye, ExternalLink } from "lucide-react"
+import { ArrowRight, ArrowUpRight, Brain, Network, Sparkles, Eye, ExternalLink, CalendarPlus } from "lucide-react"
 import { getBasePath } from "@/lib/utils"
 import { getAllPostSlugs, getPostData } from "@/lib/blogs"
 import { blogs as staticBlogs } from "@/app/data/blogs"
@@ -232,15 +232,15 @@ export default async function Home() {
               </p>
               <div className="flex flex-wrap gap-4">
                 <a
-                  href="https://scholar.google.com/citations?hl=en&user=WgAGy7wAAAAJ"
+                  href="https://calendar.google.com/calendar/embed?src=133119be73327f71c4508b0f3c18740ab10865a7869175ce7df567e66997f403%40group.calendar.google.com&ctz=America%2FNew_York"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-muted-foreground transition-colors"
                 >
-                  Interest Form
+                  <CalendarPlus className="w-4 h-4" />
+                  Add to Google Calendar
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
-
               </div>
             </div>
             <div>

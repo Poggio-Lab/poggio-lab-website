@@ -2,38 +2,37 @@ import { Calendar, Clock, MapPin, User } from "lucide-react"
 
 const seminars = [
     {
-        date: "Mar day, 2026",
-        time: "hour:00 PM ET",
-        speaker: "Speaker 1",
-        affiliation: "Affiliation 1",
-        title: "Title 1",
-        location: "Location 1",
+        date: "March 3, 2025",
+        time: "4:00 PM ET",
+        speaker: "Tomaso Poggio",
+        affiliation: "MIT, McGovern Institute",
+        title: "Principles of Deep Learning",
+        location: "McGovern Reading Room (46-5165)",
     },
     {
-        date: "Mar day, 2026",
-        time: "hour:00 PM ET",
-        speaker: "Speaker 2",
-        affiliation: "Affiliation 2",
-        title: "Title 2",
-        location: "Location 2",
+        date: "March 9, 2025",
+        time: "4:00 PM ET",
+        speaker: "Adam Marblestone",
+        affiliation: "Convergent Research",
+        title: "The Missing Fundamentals",
+        location: "McGovern Reading Room (46-5165)",
     },
     {
-        date: "Mar day, 2026",
-        time: "hour:00 PM ET",
-        speaker: "Speaker 3",
-        affiliation: "Affiliation 3",
-        title: "Title 3",
-        location: "Location 3",
+        date: "March 16, 2025",
+        time: "4:00 PM ET",
+        speaker: "Blaise Agüera y Arcas",
+        affiliation: "Google",
+        title: "Intelligence as Prediction: Cybernetics, LLMs, and Sociality",
+        location: "McGovern Reading Room (46-5165)",
     },
     {
-        date: "Mar day, 2026",
-        time: "hour:00 PM ET",
-        speaker: "Speaker 3",
-        affiliation: "Affiliation 3",
-        title: "Title 3",
-        location: "Location 3",
+        date: "March 30, 2025",
+        time: "4:00 PM ET",
+        speaker: "Joe Bates",
+        affiliation: "Singular Computing",
+        title: "A Billion Core",
+        location: "McGovern Reading Room (46-5165)",
     },
-
 ]
 
 export function SeminarTimeline() {
@@ -89,10 +88,10 @@ export function SeminarTimeline() {
             </div>
 
             <div className="pl-10 mt-10">
-                <button className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors inline-flex items-center gap-2">
+                <a href="https://calendar.google.com/calendar/embed?src=133119be73327f71c4508b0f3c18740ab10865a7869175ce7df567e66997f403%40group.calendar.google.com&ctz=America%2FNew_York" target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-foreground hover:text-muted-foreground transition-colors inline-flex items-center gap-2">
                     View Full Schedule
                     <span aria-hidden="true">→</span>
-                </button>
+                </a>
             </div>
         </div>
     )
